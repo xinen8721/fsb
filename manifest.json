@@ -1,0 +1,44 @@
+{
+	"manifest_version": 2,
+	"name": "FSB",
+	"version": "0.0.1",
+	"description": "FSB is an open-source extension that aids in the purchase of sneakers from Footlocker's mobile site. It was an exercise in building a browser extension.",
+	"author": "Chris Grigg, chris@subvertallmedia.com",
+	"icons": {
+		"128": "assets/images/fsb-icon128.png",
+		"48": "assets/images/fsb-icon48.png"
+	},
+	"permissions": [
+		"activeTab",
+		"alarms",
+		"tabs",
+		"background",
+		"declarativeContent",
+		"notifications",
+		"https://ajax.googleapis.com/",
+    	"http://*/",
+    	"https://*/"
+	],
+	"background": {
+		"scripts": ["assets/background/background.js", "assets/config/jquery-2.1.4.min.js"],
+		"persistent": false
+	},
+	"page_action": {
+		"default_popup": "assets/config/config.html",
+		"icons": {
+			"128": "assets/images/fsb-icon128.png",
+			"48": "assets/images/fsb-icon48.png"
+		}
+	},
+	"content_scripts": [
+    {
+      "matches": ["http://*/product/model*"],
+		  "js": ["assets/scripts/sneakerbot.js"]
+    }, {
+      "matches": ["http://m.footlocker.com/?uri=cart", "https://m.footlocker.com/?uri=cart"],
+      "js": ["assets/scripts/cartwatcher.js"]
+    }, {
+      "matches": ["https://m.footlocker.com/?uri=checkout"],
+      "js": ["assets/scripts/cartcheckout.js"]
+    }]
+}
